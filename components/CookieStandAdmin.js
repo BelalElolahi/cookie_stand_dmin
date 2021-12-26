@@ -51,11 +51,12 @@ export default function CookieStandAdmin(props) {
 
         const Branche = {
             location:event.target.location.value,
+            Description:'',
+            hourly_sales: [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36],
             minCustomer:event.target.min.value,
             maxCustomer:event.target.max.value,
-            avgCookies:event.target.avg.value,
-            hourly_sales: [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36]
-        }
+            avgCookies:event.target.avg.value
+          }
 
 
 
@@ -76,10 +77,15 @@ export default function CookieStandAdmin(props) {
         })
 
 
-        setBranch((Branches) => {
+        /* setBranch((Branches) => {
             Branches.push(Branche)
             return Branches
-        });
+        }); */
+
+         axios.post(endPoint,Branche,config()).then(res =>{
+            setBranch([...Branches,res.data]);
+        })
+       
      
     }
     return (
