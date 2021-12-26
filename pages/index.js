@@ -3,14 +3,12 @@ import { useState } from "react"
 import CookieStandAdmin from "../components/CookieStandAdmin"
 import LoginForm from "../components/LoginForm"  
 
-const baseUrl = 'https://cooke-stand.herokuapp.com/'
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
 const tokenUrl = baseUrl+'api/token/'
 
 export default function Home() {
 
-  
-
-  const [token , setToken] = useState('')
+  const [token , setToken] = useState('');
 
   const submithandler = (e, credintials)=>{
     e.preventDefault();

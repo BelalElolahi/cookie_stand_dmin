@@ -6,7 +6,7 @@ import ReportTable from './ReportTable'
 import axios from 'axios'
 
 
-const baseUrl = 'https://cooke-stand.herokuapp.com/'
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
 const endPoint = baseUrl+'api/v1/cookie_stands/'
 export default function CookieStandAdmin(props) {
 
