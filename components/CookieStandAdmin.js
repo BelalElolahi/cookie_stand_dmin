@@ -1,9 +1,14 @@
 import Head from 'next/head'
 import Header from './Header'
 import Footer from './Footer'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import ReportTable from './ReportTable'
-export default function CookieStandAdmin() {
+import axios from 'axios'
+
+
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
+const endPoint = baseUrl+'api/v1/cookie_stands/'
+export default function CookieStandAdmin(props) {
 
     const [show, setShow] = useState('')
     const [location, setlocation] = useState('')
@@ -11,6 +16,32 @@ export default function CookieStandAdmin() {
     const [max, setmax] = useState(0)
     const [avg, setavg] = useState(0)
     const [Branches, setBranch] = useState([])
+    let Branchees1 = []
+    
+    function config() {
+
+      return {
+        headers:{
+          'Authorization': `Bearer ${props.token.access}`
+        }
+      }
+  }
+    
+   
+    useEffect(() => {
+      axios.get(endPoint,config()).then(res =>{
+        
+        res.data.forEach(element => {
+          Branchees1.push(element)
+          
+        });
+        setBranch(Branchees1)
+    })
+    }, []);
+   
+    
+    
+   
 
 
     function formHandler(event) {
@@ -49,7 +80,7 @@ export default function CookieStandAdmin() {
             Branches.push(Branche)
             return Branches
         });
-
+     
     }
     return (
         <div className="flex flex-col justify-center min-h-screen py-2">
@@ -93,6 +124,8 @@ export default function CookieStandAdmin() {
             {Branches.length ? 
              <ReportTable Branches={Branches} 
                           hours={['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm']} 
+                          token={props.token}
+
                           >
 
              </ReportTable>
